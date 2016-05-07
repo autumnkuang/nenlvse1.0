@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <display-name>Archetype Created Web Application</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:config/applicationContext*.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- ################################################ -->
+    <!-- 设置项目编码部分 -->
+    <!-- ################################################ -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- ################################################ -->
+    <!-- 设置共享session -->
+    <!-- ################################################ -->
+    <filter>
+        <filter-name>ShareSessionFilter</filter-name>
+        <filter-class>com.guiguzi.framework.web.filter.ShareSessionFilter</filter-class>
+        <init-param>
+            <param-name>cacheAutoDestroy</param-name>
+            <param-value>false</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>domainKey</param-name>
+            <param-value>token</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ShareSessionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>holderFilter</filter-name>
+        <filter-class>com.guiguzi.framework.web.filter.HolderFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>holderFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- ################################################ -->
+    <!-- 防止表单重复提交 -->
+    <!-- ################################################ -->
+    <!--<filter>-->
+    <!--<filter-name>submitFormFilter</filter-name>-->
+    <!--<filter-class>com.guiguzi.web.filter.DuplicateSubmitFilter</filter-class>-->
+    <!--<init-param>-->
+    <!--<param-name>duplicateSubmitKey</param-name>-->
+    <!--<param-value>submitId</param-value>-->
+    <!--</init-param>-->
+
+    <!--<init-param>-->
+    <!--<param-name>filterUri</param-name>-->
+    <!--<param-value>loginForm.do</param-value>-->
+    <!--</init-param>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+    <!--<filter-name>submitFormFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!-- ################################################ -->
+    <!-- Spring mvc 配置段 -->
+    <!-- ################################################ -->
+    <servlet>
+        <description>spring mvc servlet</description>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <description>spring mvc 配置文件</description>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:config/spring-mvc*.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

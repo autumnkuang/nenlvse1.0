@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:cache="http://www.springframework.org/schema/cache"  
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd   
+          http://www.springframework.org/schema/context   
+          http://www.springframework.org/schema/context/spring-context-3.1.xsd   
+          http://www.springframework.org/schema/aop   
+          http://www.springframework.org/schema/aop/spring-aop-3.1.xsd   
+          http://www.springframework.org/schema/tx    
+          http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+          http://www.springframework.org/schema/cache 
+          http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+          http://www.springframework.org/schema/data/jpa
+          http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+        <context:annotation-config />
+        <context:component-scan base-package="com.haowu,com.guiguzi"/>
+
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="order" value="1000"/>
+            <property name="ignoreUnresolvablePlaceholders" value="true"/>
+            <property name="ignoreResourceNotFound" value="true"/>
+            <property name="locations">
+                <list>
+                    <value>classpath:youche-jdbc.xml</value>
+                    <value>file:${catalina.home}/youche-jdbc.xml</value>
+
+                    <value>classpath:youche-system.properties</value>
+                    <value>file:${catalina.home}/youche-system.properties</value>
+                </list>
+            </property>
+        </bean>
+
+        <bean id="loadLocalConfigProperties" class="com.guiguzi.pay.core.config.LoadLocalConfigProperties" init-method="init">
+            <property name="privateKey" value="${private_key}"  />
+            <property name="aliPublicKey" value="${ali_public_key}"  />
+            <property name="bizPayOrderCallbackUrl" value="${biz_pay_order_callback_url}"  />
+            <property name="kaolaRechangeCallbackUrl" value="${kaola_rechange_callback_url}"  />
+            <property name="swalletPayDealUrl" value="${swallet_pay_deal_url}"  />
+        </bean>
+
+        <bean id="loadDBPayConfigProperties" class="com.guiguzi.pay.core.config.LoadDBPayConfigProperties" init-method="init">
+        </bean>
+</beans>

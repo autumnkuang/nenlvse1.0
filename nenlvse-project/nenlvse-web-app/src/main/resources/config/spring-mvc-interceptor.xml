@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+<!-- 以下配置将拦截特有的URL请求-->
+<mvc:interceptors>
+    <!--<mvc:interceptor>
+        <mvc:mapping path="/v1/**"/>
+        &lt;!&ndash;请求加密校验&ndash;&gt;
+        <bean class="com.guiguzi.app.interceptor.UrlEncryptValidateInterceptor">
+            <property name="secret" value="999a7a5593324cdb889d9d679d1c5745"></property>
+            <property name="digestKey" value="digest"/>
+            <property name="joinFieldNames" value="deviceId,appKey,version,timestamp,nonce"></property>
+        </bean>
+    </mvc:interceptor>-->
+
+    <!-- 用户登录校验 -->
+    <mvc:interceptor>
+        <mvc:mapping path="/app/**"/>
+        <!-- 用户登录校验 -->
+        <bean class="com.guiguzi.app.interceptor.LoginValidateInterceptor">
+            <property name="excludeUris" value="login.do"/>
+        </bean>
+    </mvc:interceptor>
+</mvc:interceptors>
+</beans>

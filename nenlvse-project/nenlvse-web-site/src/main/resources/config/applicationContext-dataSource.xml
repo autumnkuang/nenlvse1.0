@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+        >
+
+
+    <!--BoneCP configuration -->
+   <!-- <bean id="targetDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        &lt;!&ndash; 数据库驱动 &ndash;&gt;
+        <property name="driverClass" value="${BoneCP.driverClass}" />
+        &lt;!&ndash; 相应驱动的jdbcUrl,你懂的 &ndash;&gt;
+        <property name="jdbcUrl" value="${BoneCP.jdbcUrl}" />
+        &lt;!&ndash; 数据库的用户名 &ndash;&gt;
+        <property name="username" value="${BoneCP.username}" />
+        &lt;!&ndash; 数据库的密码 &ndash;&gt;
+        <property name="password" value="${BoneCP.password}" />
+        &lt;!&ndash; 每个分区最大的连接数 &ndash;&gt;
+        <property name="maxConnectionsPerPartition" value="${BoneCP.maxConnectionsPerPartition}" />
+        &lt;!&ndash; 每个分区最小的连接数 &ndash;&gt;
+        <property name="minConnectionsPerPartition" value="${BoneCP.minConnectionsPerPartition}" />
+        &lt;!&ndash; 分区数 ，默认值2，最小1，推荐3-4，视应用而定&ndash;&gt;
+        <property name="partitionCount" value="${BoneCP.partitionCount}" />
+        &lt;!&ndash; 每次去拿数据库连接的时候一次性要拿几个,默认值：2 &ndash;&gt;
+        <property name="acquireIncrement" value="${BoneCP.acquireIncrement}" />
+        &lt;!&ndash; 缓存prepared statements的大小，默认值：0 &ndash;&gt;
+        <property name="statementsCacheSize" value="${BoneCP.statementsCacheSize}" />
+        &lt;!&ndash; 数据库在获取连接时使用的验证sql &ndash;&gt;
+        <property name="initSQL" value="${BoneCP.initSQL}" />
+        &lt;!&ndash; 打印SQL &ndash;&gt;
+        <property name="logStatementsEnabled" value="${BoneCP.logStatementsEnabled}" />
+    </bean>-->
+
+    <bean id="targetDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 数据库基本信息配置 -->
+        <property name="driverClassName" value="${druid.driverClass}"/>
+        <!--数据库URL-->
+        <property name="url" value="${druid.jdbcUrl}"/>
+        <!-- 用户名 -->
+        <property name="username" value="${druid.username}"/>
+        <!-- 密码 -->
+        <property name="password" value="${druid.password}"/>
+        <!-- 初始化连接数量 -->
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <!-- 最大并发连接数 -->
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <!-- 最大空闲连接数,deprecated -->
+      <!--  <property name="maxIdle" value="${druid.maxIdle}"/>-->
+        <!-- 最小空闲连接数 -->
+        <property name="minIdle" value="${druid.minIdle}"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${druid.maxWait}"/>
+        <!-- 超过时间限制是否回收 -->
+        <property name="removeAbandoned" value="${druid.removeAbandoned}"/>
+        <!-- 超过时间限制多长；单位是毫秒 -->
+        <property name="removeAbandonedTimeoutMillis" value="${druid.removeAbandonedTimeoutMillis}"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+        <property name="validationQuery" value="${druid.validationQuery}"/>
+        <!-- 申请连接的时候检测 -->
+        <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
+        <!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
+        <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
+        <!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+        <property name="testOnReturn" value="${druid.testOnReturn}"/>
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}"/>
+        <!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
+                监控统计用的filter:stat
+                日志用的filter:log4j
+                 防御SQL注入的filter:wall -->
+        <property name="filters" value="${druid.filters}"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+        <property name="targetDataSource">
+            <ref local="targetDataSource"/>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.1.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
+    <context:component-scan base-package="com.guiguzi"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:nenlvse-jdbc.xml</value>
+                <value>file:${catalina.home}/nenlvse-jdbc.xml</value>
+
+                <value>classpath:nenlvse-redis.xml</value>
+                <value>file:${catalina.home}/nenlvse-redis.xml</value>
+
+                <value>classpath:nenlvse-system.properties</value>
+                <value>file:${catalina.home}/nenlvse-system.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <!-- System.getProperties() -->
+            <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                <property name="targetClass" value="java.lang.System"/>
+                <property name="targetMethod" value="getProperties"/>
+            </bean>
+        </property>
+        <property name="targetMethod" value="putAll"/>
+        <property name="arguments">
+            <!-- The new Properties -->
+            <util:properties>
+                <prop key="fileSystemDir">${fileSystemDir}</prop>
+                <prop key="baiduPush.android.secret">${baiduPushAndroidSecret}</prop>
+                <prop key="baiduPush.android.key">${baiduPushAndroidKey}</prop>
+                <prop key="baiduPush.ios.secret">${baiduPushIosSecret}</prop>
+                <prop key="baiduPush.ios.key">${baiduPushIosKey}</prop>
+                <prop key="baiduPush.debug">${baiduPushDebug}</prop>
+            </util:properties>
+        </property>
+    </bean>
+
+
+</beans>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment/>
+    <!-- 相应驱动的jdbcUrl-->
+    <entry key="BoneCP.jdbcUrl">jdbc:mysql://localhost:3306/joinbus?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull&amp;useLocalSessionState=true</entry>
+    <!-- 数据库的用户名 -->
+    <entry key="BoneCP.username">dev</entry>
+    <!-- 数据库的密码 -->
+    <entry key="BoneCP.password">dev</entry>
+    <!-- 相应驱动类-->
+    <entry key="BoneCP.driverClass">com.mysql.jdbc.Driver</entry>
+    <!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->
+    <entry key="BoneCP.idleConnectionTestPeriod" >240</entry>
+    <!-- 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->
+    <entry key="BoneCP.idleMaxAge">60</entry>
+    <!-- 每个分区最大的连接数 -->
+    <entry key="BoneCP.maxConnectionsPerPartition">40</entry>
+    <!-- 每个分区最小的连接数 -->
+    <entry key="BoneCP.minConnectionsPerPartition">20</entry>
+    <!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定-->
+    <entry key="BoneCP.partitionCount" >4</entry>
+    <!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
+    <entry key="BoneCP.acquireIncrement">2</entry>
+    <!-- 缓存prepared statements的大小，默认值：0 -->
+    <entry key="BoneCP.statementsCacheSize">0</entry>
+    <!-- 每个分区释放链接助理进程的数量，默认值：3，除非你的一个数据库连接的时间内做了很多工作，不然过多的助理进程会影响你的性能 -->
+    <entry key="BoneCP.releaseHelperThreads">3</entry>
+    <!-- 数据库在获取连接时使用的验证sql -->
+    <entry key="BoneCP.initSQL">select 1</entry>
+    <!--在做keep-alive的时候的SQL语句-->
+    <entry key="BoneCP.connectionTestStatement"></entry>
+    <!--如果设置为true，则会增加一个线程监控关闭连接时的情况，如果关闭时出现异常，则打出错误日志，主要用于debug。上线后记得关掉-->
+    <entry key="BoneCP.closeConnectionWatch">false</entry>
+    <!--如果设置为true，就会打印执行的SQL语句，如果你用了其他能打印SQL语句的框架，那就不必了-->
+    <entry key="BoneCP.logStatementsEnabled">true</entry>
+    <!--在获取连接失败后，第二次参试前的延迟时间，默认为7000毫秒。-->
+    <entry key="BoneCP.acquireRetryDelay">7000</entry>
+    <!--在获取连接失败后的重试次数，默认为5次-->
+    <entry key="BoneCP.acquireRetryAttempts">false</entry>
+    <!--如果设置为true，那么连接池不会自动创建最小连接数的链接，而是保持为空，直到有需求要获取连接-->
+    <entry key="BoneCP.lazyInit">false</entry>
+    <!--如果设置为true，则会保存该链接上的所有活动，以备下次重试的时候使用，这里指的活动是数据库操作-->
+    <entry key="BoneCP.transactionRecoveryEnabled">false</entry>
+    <!--Connection hook class name-->
+    <!--<entry key="BoneCP.connectionHookClassName">false</entry>-->
+    <!--自定义连接池名称-->
+    <!--<entry key="BoneCP.poolName">hoss</entry>-->
+    <!--获取连接的时候最大的等待时间，默认值为：Long.MAX_VALUE-->
+    <!--<entry key="BoneCP.connectionTimeout">false</entry>-->
+    <!--控制JMX的支持开关-->
+    <!--<entry key="BoneCP.disableJMX">false</entry>-->
+
+</properties>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.1.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+        >
+
+    <!--BoneCP configuration -->
+    <bean id="targetDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <!-- 数据库驱动 -->
+        <property name="driverClass" value="${BoneCP.driverClass}"/>
+        <!-- 相应驱动的jdbcUrl,你懂的 -->
+        <property name="jdbcUrl" value="${BoneCP.jdbcUrl}"/>
+        <!-- 数据库的用户名 -->
+        <property name="username" value="${BoneCP.username}"/>
+        <!-- 数据库的密码 -->
+        <property name="password" value="${BoneCP.password}"/>
+        <!-- 每个分区最大的连接数 -->
+        <property name="maxConnectionsPerPartition" value="${BoneCP.maxConnectionsPerPartition}"/>
+        <!-- 每个分区最小的连接数 -->
+        <property name="minConnectionsPerPartition" value="${BoneCP.minConnectionsPerPartition}"/>
+        <!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定-->
+        <property name="partitionCount" value="${BoneCP.partitionCount}"/>
+        <!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
+        <property name="acquireIncrement" value="${BoneCP.acquireIncrement}"/>
+        <!-- 缓存prepared statements的大小，默认值：0 -->
+        <property name="statementsCacheSize" value="${BoneCP.statementsCacheSize}"/>
+        <!-- 数据库在获取连接时使用的验证sql -->
+        <property name="initSQL" value="${BoneCP.initSQL}"/>
+        <!-- 打印SQL -->
+        <property name="logStatementsEnabled" value="${BoneCP.logStatementsEnabled}"/>
+    </bean>
+
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+        <property name="targetDataSource">
+            <ref local="targetDataSource"/>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+</beans>

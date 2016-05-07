@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       	http://www.springframework.org/schema/context 
+       	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       	http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       	http://www.springframework.org/schema/mvc 
+       	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
+	default-lazy-init="true">
+
+ 	 <!-- 对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+	<context:component-scan base-package="com.**.controller" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+    <mvc:annotation-driven  content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                <property name = "supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>application/*+json;charset=UTF-8</value>
+                        <value>text/javascript;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>text/plain;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name = "supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>text/javascript;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--1、检查扩展名（如my.pdf）；2、检查Parameter（如my?format=pdf）；3、检查Accept Header-->
+    <bean id= "contentNegotiationManager" class= "org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <property name= "favorPathExtension" value= "true" />
+        <!-- 用于开启 /userinfo/123?format=json 的支持 -->
+        <property name= "favorParameter" value= "false" />
+        <property name= "parameterName" value= "format"/>
+        <!-- 是否忽略Accept Header -->
+        <property name= "ignoreAcceptHeader" value= "false"/>
+        <property name= "mediaTypes"> <!--扩展名到MIME的映射；favorPathExtension, favorParameter是true时起作用  -->
+            <value>
+                do=application/json
+                htm=text/html
+            </value>
+        </property>
+        <!-- 默认的content type -->
+        <property name= "defaultContentType" value= "application/json" />
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <!-- 内容协商管理器 用于决定media type -->
+        <property name= "contentNegotiationManager" ref= "contentNegotiationManager"/>
+        <property name="viewResolvers">
+            <list>
+                <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="order" value="2"/>
+                    <property name="cache" value="false"/>
+                    <property name="prefix" value="/WEB-INF/page/"/>
+                    <property name="suffix" value=".jsp"/>
+                    <property name="contentType" value="text/html;charset=UTF-8"/>
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+                </bean>
+            </list>
+        </property>
+
+        <property name="defaultViews">
+            <list>
+                <bean class="com.guiguzi.site.view.CustomMappingJacksonJsonpView">
+                    <property name="disableCaching" value="true"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+	<!-- 文件上传 -->
+	<!-- 上传文件大小限制为31M，31*1024*1024 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		<property name="maxUploadSize">
+			<value>32505856</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>40960</value>
+		</property>
+	</bean>
+	
+	<bean id="handlerExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="warnLogCategory">    
+	        <value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>  
+	    </property>
+	    <property name="order" value="-1"/>  
+	</bean>
+</beans>

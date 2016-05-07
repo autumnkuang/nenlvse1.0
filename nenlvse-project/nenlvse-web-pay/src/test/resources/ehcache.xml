@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         maxBytesLocalHeap="50M" maxBytesLocalOffHeap="100M" maxBytesLocalDisk="500M" >
+
+
+
+    <!--
+        参数说明
+        maxElementsInMemory             在内存中最大的对象数量
+        maxElementsOnDisk               最多缓存多少个元素到硬盘(如为0，则没有限制)
+        eternal                         设置元素是否永久的，如果为永久，则timeout忽略
+        overflowToDisk                  是否当memory中的数量达到限制后，保存到Disk
+        memoryStoreEvictionPolicy       策略关于Eviction
+        timeToIdleSeconds               设置元素过期前的空闲时间
+        timeToLiveSeconds               设置元素过期前的活动时间
+        diskPersistent                  是否disk store在虚拟机启动时持久化。默认为false
+
+        cacheEventListenerFactory       注册相应的的缓存监听类，用于处理缓存事件，如put,remove,update,和expire
+        bootstrapCacheLoaderFactory     指定相应的BootstrapCacheLoader，用于在初始化缓存，以及自动设置。
+    -->
+    <diskStore path="java.io.tmpdir"/>
+    <defaultCache
+            maxElementsInMemory="10000"
+            maxElementsOnDisk="0"
+            eternal="false"
+            overflowToDisk="true"
+            diskPersistent="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            diskSpoolBufferSizeMB="50"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+            overflowToOffHeap="false"
+            />
+
+
+    <cache name="entity_province"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
+           overflowToOffHeap="false"/>
+
+    <cache name="entity_city"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
+           overflowToOffHeap="false"/>
+
+    <cache name="entity_area"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
+           overflowToOffHeap="false"/>
+
+    <cache name="entity_plate"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
+           overflowToOffHeap="false"/>
+
+    <cache name="json_cooperate"
+           timeToIdleSeconds="900"
+           timeToLiveSeconds="900"
+           overflowToOffHeap="false"/>
+
+    <cache name="json_all_city"
+           timeToIdleSeconds="900"
+           timeToLiveSeconds="900"
+           overflowToOffHeap="false"/>
+
+    <cache name="attachment"
+           timeToIdleSeconds="900"
+           timeToLiveSeconds="900"
+           overflowToOffHeap="false"/>
+</ehcache>

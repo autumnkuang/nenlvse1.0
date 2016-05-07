@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <!-- JedisPoolConfig -->
+    <entry key="redis.poolConfig.minIdle">5</entry>
+    <entry key="redis.poolConfig.maxIdle">30</entry>
+    <entry key="redis.poolConfig.maxTotal">1000</entry>
+    <entry key="redis.poolConfig.maxWaitMillis">500000</entry>
+    <entry key="redis.poolConfig.testOnReturn">true</entry>
+    <entry key="redis.poolConfig.testWhileIdle">false</entry>
+    <entry key="redis.poolConfig.testOnBorrow">true</entry>
+
+
+    <!-- JedisConnectionFactory -->
+    <entry key="redis.database">0</entry>
+    <entry key="redis.hostName">127.0.0.1</entry>
+    <entry key="redis.password"></entry>
+    <entry key="redis.port">6379</entry>
+    <entry key="redis.timeout">10000</entry>
+    <entry key="redis.usePool">true</entry>
+    <!--<entry key="redis.shardInfo">127.0.0.1</entry>-->
+    <entry key="redis.convertPipelineAndTxResults">true</entry>
+</properties>
