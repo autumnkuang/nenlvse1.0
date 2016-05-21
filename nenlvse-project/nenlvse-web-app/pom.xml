@@ -54,6 +54,6 @@
 
     </dependencies>
     <build>
-        <finalName>huihenenlvse-app</finalName>
+        <finalName>nenlvse-app</finalName>
     </build>
 </project>

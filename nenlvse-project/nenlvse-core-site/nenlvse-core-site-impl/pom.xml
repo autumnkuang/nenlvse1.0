@@ -41,7 +41,6 @@
         <dependency>
             <groupId>com.guiguzi.framework</groupId>
             <artifactId>guiguzi-push</artifactId>
-            <version>1.0-RELEASE</version>
         </dependency>
     </dependencies>
 

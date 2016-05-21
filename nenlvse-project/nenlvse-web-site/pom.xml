@@ -63,6 +63,6 @@
 
     </dependencies>
     <build>
-        <finalName>huihenenlvse-manage</finalName>
+        <finalName>nenlvse-manage</finalName>
     </build>
 </project>

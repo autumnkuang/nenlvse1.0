@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>nenlvse-service-common</module>
+        <module>nenlvse-service-user</module>
         <module>nenlvse-core-pay</module>
         <module>nenlvse-core-site</module>
         <module>nenlvse-core-app</module>
@@ -234,6 +235,12 @@
 
             <dependency>
                 <groupId>com.guiguzi.framework</groupId>
+                <artifactId>guiguzi-payment</artifactId>
+                <version>${com.guiguzi.framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.guiguzi.framework</groupId>
                 <artifactId>guiguzi-web</artifactId>
                 <version>${com.guiguzi.framework.version}</version>
             </dependency>
@@ -253,12 +260,6 @@
             <dependency>
                 <groupId>com.guiguzi.framework</groupId>
                 <artifactId>guiguzi-push</artifactId>
-                <version>${com.guiguzi.framework.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.guiguzi.framework</groupId>
-                <artifactId>guiguzi-quartz</artifactId>
                 <version>${com.guiguzi.framework.version}</version>
             </dependency>
             <!-- guiguzi framework end -->
@@ -434,12 +435,6 @@
             </dependency>
 
             <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>2.6.1</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.1</version>
@@ -449,12 +444,6 @@
                 <groupId>net.sf.ehcache</groupId>
                 <artifactId>ehcache-core</artifactId>
                 <version>2.4.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
             </dependency>
 
             <!--bonecp-->
@@ -505,6 +494,12 @@
             <!-- Database end -->
 
             <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+
+            <dependency>
                 <groupId>javax.servlet.jsp.jstl</groupId>
                 <artifactId>jstl-api</artifactId>
                 <version>${jstl.version}</version>
@@ -522,16 +517,12 @@
                 <version>1.1.2</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.shjianzhou</groupId>
-                <artifactId>jzsms</artifactId>
-                <version>6.0</version>
-            </dependency>
-            <dependency>
+
+     <!--       <dependency>
                 <groupId>com.ccp_rest</groupId>
                 <artifactId>ytx</artifactId>
                 <version>2.7</version>
-            </dependency>
+            </dependency>-->
 
             <!--<dependency>
                 <groupId>com.baidu.push</groupId>
@@ -539,12 +530,15 @@
                 <version>3.0.1</version>
             </dependency>-->
 
-            <!--<groupId>net.sourceforge.pinyin4j</groupId>-->
-                <!--<artifactId>pinyin4j</artifactId>-->
-                <!--<version>2.5.0</version>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>net.sourceforge.pinyin4j</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>2.5.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>

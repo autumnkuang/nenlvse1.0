@@ -152,10 +152,10 @@
             <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
 
-        <dependency>
+ <!--       <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!--<dependency>-->
             <!--<groupId>net.sourceforge.pinyin4j</groupId>-->
@@ -179,34 +179,34 @@
 
         <dependency>
             <groupId>com.guiguzi.framework</groupId>
-            <artifactId>guiguzi-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.shjianzhou</groupId>
-            <artifactId>jzsms</artifactId>
-        </dependency>
-
-        <!--<dependency>
-            <groupId>com.baidu.push</groupId>
-            <artifactId>bccs-api</artifactId>
-        </dependency>-->
-
-        <dependency>
-            <groupId>com.ccp_rest</groupId>
-            <artifactId>ytx</artifactId>
+            <artifactId>guiguzi-payment</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.guiguzi.framework</groupId>
-            <artifactId>guiguzi-payment</artifactId>
-            <version>1.0-RELEASE</version>
+            <artifactId>guiguzi-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.guiguzi.framework</groupId>
             <artifactId>guiguzi-push</artifactId>
         </dependency>
+
+    <!--    <dependency>
+            <groupId>com.shjianzhou</groupId>
+            <artifactId>jzsms</artifactId>
+        </dependency>-->
+
+        <!--<dependency>
+            <groupId>com.baidu.push</groupId>
+            <artifactId>bccs-api</artifactId>
+        </dependency>-->
+
+   <!--     <dependency>
+            <groupId>com.ccp_rest</groupId>
+            <artifactId>ytx</artifactId>
+        </dependency>-->
+
     </dependencies>
 
 </project>

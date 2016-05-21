@@ -50,6 +50,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>huihenenlvse-pay</finalName>
+        <finalName>nenlvse-pay</finalName>
     </build>
 </project>
